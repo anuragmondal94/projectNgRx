@@ -4,16 +4,24 @@ import { Store } from '@ngrx/store';
 import { authActions } from '../../store/actions';
 import { RegisterRequestInterface } from '../../types/registeRequest.interface';
 import { RouterLink } from '@angular/router';
-import { selectIsSubmitting } from '../../store/reducers';
-import { AuthStateInterface } from '../../types/authState.interface';
+import {
+  selectIsSubmitting,
+  selectValidationErrors,
+} from '../../store/reducers';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
+import { combineLatest } from 'rxjs';
+import { BackendErrorMessages } from 'src/shared/components/backendErrorMessages/backendErrorMessages.component';
 
 @Component({
   selector: 'dp-register',
   templateUrl: './register.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    CommonModule,
+    BackendErrorMessages,
+  ],
 })
 export class RegisterComponent {
   form = this.fb.nonNullable.group({
@@ -21,13 +29,13 @@ export class RegisterComponent {
     email: ['', Validators.required],
     password: ['', Validators.required],
   });
-  isSubmitting$ = this.store.select(selectIsSubmitting);
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private authService: AuthService
-  ) {}
+  data$ = combineLatest({
+    isSubmitting: this.store.select(selectIsSubmitting),
+    backendErrors: this.store.select(selectValidationErrors),
+  });
+
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   onSubmit() {
     console.log('form', this.form.getRawValue());
