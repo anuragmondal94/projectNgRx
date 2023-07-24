@@ -1,0 +1,36 @@
+<ng-container *ngIf="data$ | async as data">
+  <dp-loading *ngIf="data.isLoading"></dp-loading>
+  <dp-error-message
+    *ngIf="data.error"
+    [message]="data.error"
+  ></dp-error-message>
+
+  <div *ngIf="data.feed">
+    <div class="article-preview" *ngFor="let article of data.feed.articles">
+      <div class="article-meta">
+        <a [routerLink]="['/profiles', article.author.username]">
+          <img [src]="article.author.image" />
+        </a>
+        <div class="info">
+          <a [routerLink]="['/profiles', article.author.username]">
+            {{ article.author.username }}
+          </a>
+          <span class="date">{{ article.createdAt }}</span>
+        </div>
+        <div class="pull-xs-right">Add TO Favourites</div>
+      </div>
+      <a [routerLink]="['/articles', article.slug]" class="preview-link">
+        <h1>{{ article.title }}</h1>
+        <p>{{ article.desrciption }}</p>
+        <span>Read More..</span>
+        <dp-tag-list [tags]="article.tagList"></dp-tag-list>
+      </a>
+    </div>
+    <dp-pagination
+      [total]="data.feed.articlesCount"
+      [limit]="limit"
+      [url]="baseUrl"
+      [currentPage]="currentPage"
+    ></dp-pagination>
+  </div>
+</ng-container>
