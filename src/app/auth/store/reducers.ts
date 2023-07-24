@@ -2,7 +2,7 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { AuthStateInterface } from '../types/authState.interface';
 import { authActions } from './actions';
 import { state } from '@angular/animations';
-import { routerNavigatedAction } from '@ngrx/router-store';
+import { routerNavigationAction } from '@ngrx/router-store';
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
@@ -60,7 +60,7 @@ const authFeature = createFeature({
       isLoading: false,
       currentUser: null,
     })),
-    on(routerNavigatedAction, (state) => ({
+    on(routerNavigationAction, (state) => ({
       ...state,
       validationErrors: null,
     }))

@@ -1,11 +1,11 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
-import { CurrentUserInterface } from 'src/shared/types/currentUser.interface';
+import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 import { authActions } from './actions';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PersistanceService } from 'src/shared/services/persistance.service';
+import { PersistanceService } from 'src/app/shared/services/persistance.service';
 import { Router } from '@angular/router';
 
 export const getCurrentUserEffect = createEffect(
@@ -17,6 +17,11 @@ export const getCurrentUserEffect = createEffect(
     return actions$.pipe(
       ofType(authActions.getCurrentUser),
       switchMap(() => {
+        const token = persistanceService.get('accessToken');
+
+        if (!token) {
+          return of(authActions.getCurrentUserFailure);
+        }
         return authService.getCurrentUser().pipe(
           map((currentUser: CurrentUserInterface) => {
             return authActions.getCurrentUserSucess({ currentUser });
