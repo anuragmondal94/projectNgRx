@@ -7,14 +7,17 @@ import { ArticleResponseInterface } from 'src/app/shared/types/articleResponse.i
 import { environment } from 'src/environments/environment.development';
 
 @Injectable()
-export class CreateArticleService {
+export class EditArticleService {
   constructor(private http: HttpClient) {}
-  createArticle(
+
+  updateArticle(
+    slug: string,
     articleRequest: ArticleRequestInterface
   ): Observable<ArticleInterface> {
-    const fullUrl = environment.apiUrl + '/articles';
+    const fullUrl = `${environment.apiUrl}/articles/${slug}`
+
     return this.http
-      .post<ArticleResponseInterface>(fullUrl, articleRequest)
-      .pipe(map((response) => response.article));
+      .put<ArticleResponseInterface>(fullUrl, articleRequest)
+      .pipe(map((response) => response.article))
   }
 }

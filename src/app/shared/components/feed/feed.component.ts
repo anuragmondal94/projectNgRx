@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment.development';
 import { PaginationComponent } from '../pagination/pagination.component';
 import queryString from 'query-string';
 import { TagListComponent } from '../tagList/tagList.component';
+import { AddTOFavoritesComponent } from '../addToFavorites/addToFavorites.component';
 
 @Component({
   selector: 'dp-feed',
@@ -29,6 +30,7 @@ import { TagListComponent } from '../tagList/tagList.component';
     LoadingComponet,
     PaginationComponent,
     TagListComponent,
+    AddTOFavoritesComponent
   ],
 })
 export class FeedComponent implements OnInit, OnChanges {

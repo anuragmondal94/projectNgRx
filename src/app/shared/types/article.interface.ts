@@ -4,7 +4,7 @@ import { ProfileInterface } from "./profile.interface";
 export interface ArticleInterface {
   body: string;
   createdAt: string;
-  desrciption: string;
+  description: string;
   favorited: boolean;
   favoritesCount: number;
   slug: string;

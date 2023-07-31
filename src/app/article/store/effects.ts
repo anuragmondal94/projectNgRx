@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
 export const getArticleffect = createEffect(
   (
     actions$ = inject(Actions),
-    articelService = inject(SharedArticleService)
+    articleService = inject(SharedArticleService)
   ) => {
     return actions$.pipe(
       ofType(articleActions.getArticle),
       switchMap(({ slug }) => {
-        return articelService.getArticle(slug).pipe(
+        return articleService.getArticle(slug).pipe(
           map((article: ArticleInterface) => {
             return articleActions.getArticleSuccess({ article });
           }),
@@ -30,11 +30,11 @@ export const getArticleffect = createEffect(
 );
 
 export const deleteArticleEffect = createEffect(
-  (actions$ = inject(Actions), articelService = inject(ArticleService)) => {
+  (actions$ = inject(Actions), articleService = inject(ArticleService)) => {
     return actions$.pipe(
       ofType(articleActions.deleteArticle),
       switchMap(({ slug }) => {
-        return articelService.deleteArticle(slug).pipe(
+        return articleService.deleteArticle(slug).pipe(
           map(() => {
             return articleActions.deleteArticleSuccess();
           }),

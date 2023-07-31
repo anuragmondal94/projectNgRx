@@ -12,16 +12,22 @@
           <img [src]="article.author.image" />
         </a>
         <div class="info">
-          <a [routerLink]="['/profiles', article.author.username]">
+          <a [routerLink]="['/profile', article.author.username]">
             {{ article.author.username }}
           </a>
           <span class="date">{{ article.createdAt }}</span>
         </div>
-        <div class="pull-xs-right">Add TO Favourites</div>
+        <div class="pull-xs-right">
+          <dp-add-to-favorites
+            [isFavorited]="article.favorited"
+            [articleSlug]="article.slug"
+            [favoritesCount]="article.favoritesCount"
+          ></dp-add-to-favorites>
+        </div>
       </div>
       <a [routerLink]="['/articles', article.slug]" class="preview-link">
         <h1>{{ article.title }}</h1>
-        <p>{{ article.desrciption }}</p>
+        <p>{{ article.description }}</p>
         <span>Read More..</span>
         <dp-tag-list [tags]="article.tagList"></dp-tag-list>
       </a>

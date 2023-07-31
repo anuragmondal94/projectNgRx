@@ -7,7 +7,7 @@ import {
   selectIsSubmitting,
   selectValidationErrors,
 } from '../../store/reducers';
-import { ArticelRequestInterface } from 'src/app/shared/types/articleRequest.interface';
+import { ArticleRequestInterface } from 'src/app/shared/types/articleRequest.interface';
 import { createArticleActions } from '../../store/actions';
 import { CommonModule } from '@angular/common';
 
@@ -32,7 +32,7 @@ export class CreateArticleComponent {
   constructor(private store: Store) {}
 
   onSubmit(articleFormValues: ArticleFormValuesInterface): void {
-    const request: ArticelRequestInterface = {
+    const request: ArticleRequestInterface = {
       article: articleFormValues,
     };
     this.store.dispatch(createArticleActions.createArticle({ request }));
