@@ -1,4 +1,4 @@
-export interface ArticelRequestInterface {
+export interface ArticleRequestInterface {
     article: {
         title: string
         description: string
